@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 class Square extends React.Component {
+  // add a constructor to the Square class to initialize the state
   constructor(props) {
     super(props);
     this.state = {
@@ -11,9 +12,9 @@ class Square extends React.Component {
 
   render() {
     return (
-      //we’re passing a function as the onClick prop. React will only call this function after a click.
-      <button className="square" onClick={() => alert("click")}>
-        {this.props.value}
+      //change the Square’s render method to display the current state’s value when clicked
+      <button className="square" onClick={() => this.setState({ value: "X" })}>
+        {this.state.value}
       </button>
     );
   }
