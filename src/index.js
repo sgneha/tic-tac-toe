@@ -3,7 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 class Square extends React.Component {
   render() {
-    return <button className="square">{this.props.value}</button>;
+    return (
+      //we’re passing a function as the onClick prop. React will only call this function after a click.
+      <button className="square" onClick={() => alert("click")}>
+        {this.props.value}
+      </button>
+    );
   }
 }
 
