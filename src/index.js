@@ -23,6 +23,9 @@ class Board extends React.Component {
   handleClick(i) {
     //call .slice() to create a copy of the squares array to modify instead of modifying the existing array.
     const squares = this.state.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
     squares[i] = this.state.xIsnext ? "X" : "0";
     /* xIsNext (a boolean) will be flipped to determine which player goes 
                                                  next and the game’s state will be saved. We’ll update the Board’s 
@@ -49,7 +52,7 @@ class Board extends React.Component {
   render() {
     const winner = calculateWinner(this.state.squares);
     let status;
-    "Next player: " + (this.state.xIsnext ? "X" : "0");
+
     if (winner) {
       status = "Winner:" + winner;
     } else {
