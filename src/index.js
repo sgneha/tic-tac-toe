@@ -11,15 +11,7 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  // constructor to the Board and set the Board’s initial state to contain an array of 9 nulls corresponding to the 9 squares:
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      squares: Array(9).fill(null),
-      xIsnext: true, //set the first move to be “X” by default.
-    };
-  }
+  //Deleted the constructor in Board.
   handleClick(i) {
     //call .slice() to create a copy of the squares array to modify instead of modifying the existing array.
     const squares = this.state.squares.slice();
@@ -36,15 +28,14 @@ class Board extends React.Component {
     });
   }
   renderSquare(i) {
-    //modify the Board’s renderSquare method to read from it
     return (
+      //Board component receive squares and onClick props from the Game component
       <Square
-        value={this.state.squares[i]} // pass a prop called value to the Square
+        value={this.props.squares[i]} //
         onClick={() =>
-          this.handleClick(i)
-        } /*Since state is considered to be private to a component that defines it, we cannot update the Board’s state directly from Square.
-
-                                             Instead, we’ll pass down a function from the Board to the Square*/
+          this.props.onClick(i)
+        } /* Since we had single click handler in Board for many Squares, we’ll need to pass the location of each 
+        Square into the onClick handler to indicate which Square was clicked. */
       />
     );
   }
