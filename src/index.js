@@ -11,22 +11,7 @@ function Square(props) {
 }
 
 class Board extends React.Component {
-  //Deleted the constructor in Board.
-  handleClick(i) {
-    //call .slice() to create a copy of the squares array to modify instead of modifying the existing array.
-    const squares = this.state.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    squares[i] = this.state.xIsnext ? "X" : "0";
-    /* xIsNext (a boolean) will be flipped to determine which player goes 
-                                                 next and the game’s state will be saved. We’ll update the Board’s 
-                                                 handleClick function to flip the value of xIsNext */
-    this.setState({
-      squares: squares,
-      xIsnext: !this.state.xIsnext,
-    });
-  }
+  // move the handleClick method from the Board component to the Game component.
   renderSquare(i) {
     return (
       //Board component receive squares and onClick props from the Game component
@@ -41,18 +26,11 @@ class Board extends React.Component {
   }
 
   render() {
-    const winner = calculateWinner(this.state.squares);
-    let status;
-
-    if (winner) {
-      status = "Winner:" + winner;
-    } else {
-      status = "Next player: " + (this.state.xIsnext ? "X" : "0");
-    }
+    /*Since the Game component is now rendering the game’s status, 
+    we can remove the corresponding code from the Board’s render method. */
 
     return (
       <div>
-        <div className="status">{status}</div>
         <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
@@ -85,14 +63,52 @@ class Game extends React.Component {
       xIsNext: true,
     };
   }
+
+  handleClick(i) {
+    //call .slice() to create a copy of the squares array to modify instead of modifying the existing array.
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsnext ? "X" : "0";
+    /* xIsNext (a boolean) will be flipped to determine which player goes 
+                                                   next and the game’s state will be saved. We’ll update the Board’s 
+                                                   handleClick function to flip the value of xIsNext */
+    this.setState({
+      history: history.concat([
+        {
+          // we concatenate new history entries onto history
+          squares: squares, // unlike push(), concat() method doesn’t mutate the original array
+        },
+      ]),
+      xIsnext: !this.state.xIsnext,
+    });
+  }
   render() {
+    /*We’ll update the Game component’s render function to 
+    use the most recent history entry to determine and display the game’s status */
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const winner = calculateWinner(current.squares);
+    let status;
+    if (winner) {
+      status = "Winner:" + winner;
+    } else {
+      status = "Next player: " + (this.state.xIsnext ? "X" : "0");
+    }
+
     return (
       <div className="game">
         <div className="game-board">
-          <Board />
+          <Board
+            squares={current.squares}
+            onClick={(i) => this.handleClick(i)}
+          />
         </div>
         <div className="game-info">
-          <div>{/* status */}</div>
+          <div>{status}</div>
           <ol>{/* TODO */}</ol>
         </div>
       </div>
