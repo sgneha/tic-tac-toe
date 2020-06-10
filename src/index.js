@@ -67,7 +67,7 @@ class Game extends React.Component {
 
   handleClick(i) {
     //call .slice() to create a copy of the squares array to modify instead of modifying the existing array.
-    const history = this.state.history;
+    const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
     if (calculateWinner(squares) || squares[i]) {
@@ -84,6 +84,7 @@ class Game extends React.Component {
           squares: squares, // unlike push(), concat() method doesn’t mutate the original array
         },
       ]),
+      stepNumber: history.length, //we make a new move, we need to update stepNumber by adding stepNumber: history.length
       xIsnext: !this.state.xIsnext,
     });
   }
@@ -98,7 +99,7 @@ class Game extends React.Component {
     /*We’ll update the Game component’s render function to 
     use the most recent history entry to determine and display the game’s status */
     const history = this.state.history;
-    const current = history[history.length - 1];
+    const current = history[this.state.stepNumber]; // now rendering the currently selected move according to stepNumber,earlier was rendering the last move.
     const winner = calculateWinner(current.squares);
     /* Using the map method, we can map our history of moves to React elements
      representing buttons on the screen, and display a list of buttons to “jump” to past moves. */
