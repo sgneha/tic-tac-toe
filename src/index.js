@@ -96,9 +96,11 @@ class Game extends React.Component {
      representing buttons on the screen, and display a list of buttons to “jump” to past moves. */
     const moves = history.map((step, move) => {
       const desc = move ? "Go to move #" + move : "Go to game start";
+      /*The moves are never re-ordered, deleted, or inserted in the middle, 
+      so it’s safe to use the move index as a key. */
       return (
         // We haven’t implemented the jumpTo() method yet
-        <li>
+        <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       );
