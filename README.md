@@ -8,10 +8,10 @@ In this tutorial, we’ll show how to build an interactive tic-tac-toe game with
 
 ##### One of the features that you’ll notice is that there is a numbered list to the right of the game’s board. This list gives you a history of all of the moves that have occurred in the game, and it is updated as the game progresses.
 
-we’re also using some features from ES6 — a recent version of JavaScript. In this tutorial, we’re using arrow functions, classes, let, and const statements. You can use the Babel REPL to check what ES6 code compiles to.
+I am also using some features from ES6 — a recent version of JavaScript. In this tutorial,I am using arrow functions, classes, let, and const statements. Babel REPL can be used to check what ES6 code compiles to.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This project was bootstrapped with Create React App.
+
 
 ## Available Scripts
 
